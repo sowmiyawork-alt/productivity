@@ -69,7 +69,12 @@ export async function getDailyContent(): Promise<DailyContent> {
       },
     });
 
-    const jsonText = response.text.trim();
+    const text = response.text;
+    if (!text) {
+      throw new Error("No text content returned from Gemini API");
+    }
+
+    const jsonText = text.trim();
     const parsedContent = JSON.parse(jsonText);
     
     // Basic validation to ensure the parsed object matches the expected structure
