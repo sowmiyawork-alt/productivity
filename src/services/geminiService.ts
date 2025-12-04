@@ -69,7 +69,10 @@ export async function getDailyContent(): Promise<DailyContent> {
       },
     });
 
-    const text = response.text;
+    // Extremely safe check: ensure response exists, and safely access text property
+    // We access .text directly but verify it exists before using
+    const text = response?.text;
+
     if (!text) {
       throw new Error("No text content returned from Gemini API");
     }
